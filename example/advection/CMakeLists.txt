@@ -24,4 +24,9 @@ if( "advection-example" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(advection-example PRIVATE Parthenon::parthenon)
   lint_target(advection-example)
+  install(TARGETS advection-example DESTINATION share/examples/advection)
+  install(DIRECTORY . DESTINATION share/examples/advection
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
 endif()

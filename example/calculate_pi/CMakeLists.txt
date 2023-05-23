@@ -22,4 +22,13 @@ if( "pi-example" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(pi-example PRIVATE Parthenon::parthenon)
   lint_target(pi-example)
+  install(TARGETS pi-example DESTINATION share/examples/calculate_pi/bin)
+  install(DIRECTORY . DESTINATION share/examples/calculate_pi/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/calculate_pi/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

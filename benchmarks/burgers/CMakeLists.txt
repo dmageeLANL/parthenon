@@ -25,6 +25,11 @@ if( "burgers-benchmark" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(burgers-benchmark PRIVATE Parthenon::parthenon)
   lint_target(burgers-benchmark)
-  install(TARGETS burgers-benchmark DESTINATION share/benchmarks/burgers)
-  install(FILES burgers.pin DESTINATION share/benchmarks/burgers)
+  install(TARGETS burgers-benchmark DESTINATION share/benchmarks/burgers/bin)
+  install(FILES burgers.pin DESTINATION share/benchmarks/burgers/resources)
+  install(DIRECTORY . DESTINATION share/benchmarks/burgers/src
+    PATTERN "*.*pp"
+    PATTERN "*.txt"
+    PATTERN "*.md"
+    )
 endif()

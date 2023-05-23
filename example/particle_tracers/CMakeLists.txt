@@ -24,4 +24,13 @@ if( "particles-tracers" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(particle-tracers PRIVATE parthenon)
   lint_target(particle-tracers)
+  install(TARGETS particle-tracers DESTINATION share/examples/particle_tracers/bin)
+  install(DIRECTORY . DESTINATION share/examples/particle_tracers/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/particle_tracers/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

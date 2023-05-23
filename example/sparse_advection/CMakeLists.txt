@@ -23,4 +23,13 @@ if( "sparse_advection-example" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAM
   )
   target_link_libraries(sparse_advection-example PRIVATE Parthenon::parthenon)
   lint_target(sparse_advection-example)
+  install(TARGETS sparse_advection-example DESTINATION share/examples/sparse_advection/bin)
+  install(DIRECTORY . DESTINATION share/examples/sparse_advection/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/sparse_advection/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

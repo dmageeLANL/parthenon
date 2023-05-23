@@ -24,4 +24,13 @@ if( "poisson-example" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(poisson-example PRIVATE Parthenon::parthenon)
   lint_target(poisson-example)
+  install(TARGETS poisson-example DESTINATION share/examples/poisson/bin)
+  install(DIRECTORY . DESTINATION share/examples/poisson/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/poisson/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

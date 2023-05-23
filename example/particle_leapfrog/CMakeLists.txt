@@ -24,4 +24,13 @@ if( "particle-leapfrog" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(particle-leapfrog PRIVATE parthenon)
   lint_target(particle-leapfrog)
+  install(TARGETS particle-leapfrog DESTINATION share/examples/particle_leapfrog/bin)
+  install(DIRECTORY . DESTINATION share/examples/particle_leapfrog/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/particle_leapfrog/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

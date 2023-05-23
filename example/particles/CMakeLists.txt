@@ -20,9 +20,13 @@ if( "particles-example" IN_LIST DRIVER_LIST OR NOT PARTHENON_DISABLE_EXAMPLES)
   )
   target_link_libraries(particles-example PRIVATE parthenon)
   lint_target(particles-example)
-  install(TARGETS particles-example DESTINATION share/examples/particles)
-  install(DIRECTORY . DESTINATION share/examples/particles
-        PATTERN "*.*pp" EXCLUDE
-        PATTERN "*.txt" EXCLUDE
-        )
+  install(TARGETS particles-example DESTINATION share/examples/particles/bin)
+  install(DIRECTORY . DESTINATION share/examples/particles/resources
+		PATTERN "*.*pp" EXCLUDE
+		PATTERN "*.txt" EXCLUDE
+		)
+  install(DIRECTORY . DESTINATION share/examples/particles/src
+		PATTERN "*.*pp" 
+		PATTERN "*.txt" 
+		)
 endif()

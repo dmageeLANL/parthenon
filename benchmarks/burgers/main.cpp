@@ -1,5 +1,5 @@
 //========================================================================================
-// (C) (or copyright) 2022-2023. Triad National Security, LLC. All rights reserved.
+// (C) (or copyright) 2020. Triad National Security, LLC. All rights reserved.
 //
 // This program was produced under U.S. Government contract 89233218CNA000001 for Los
 // Alamos National Laboratory (LANL), which is operated by Triad National Security, LLC
@@ -15,6 +15,10 @@
 
 #include "burgers_driver.hpp"
 
+#ifdef USE_MEMORY_RECORD
+#include "memory_recorder.h"
+#endif
+
 int main(int argc, char *argv[]) {
   using parthenon::ParthenonManager;
   using parthenon::ParthenonStatus;
@@ -25,7 +29,12 @@ int main(int argc, char *argv[]) {
   pman.app_input->ProblemGenerator = burgers_benchmark::ProblemGenerator;
 
   // call ParthenonInit to initialize MPI and Kokkos, parse the input deck, and set up
-  auto manager_status = pman.ParthenonInitEnv(argc, argv);
+  auto manager_status = pman.ParthenonInit(argc, argv);
+
+#ifdef USE_MEMORY_RECORD
+  MemoryRecorder mem_record = MemoryRecorder();
+#endif
+
   if (manager_status == ParthenonStatus::complete) {
     pman.ParthenonFinalize();
     return 0;
@@ -38,7 +47,6 @@ int main(int argc, char *argv[]) {
   // make use of MPI and Kokkos
 
   // This needs to be scoped so that the driver object is destructed before Finalize
-  pman.ParthenonInitPackagesAndMesh();
   {
     // Initialize the driver
     burgers_benchmark::BurgersDriver driver(pman.pinput.get(), pman.app_input.get(),
@@ -47,6 +55,9 @@ int main(int argc, char *argv[]) {
     // This line actually runs the simulation
     auto driver_status = driver.Execute();
   }
+#ifdef USE_MEMORY_RECORD
+  mem_record.write_rss(0);
+#endif
   // call MPI_Finalize and Kokkos::finalize if necessary
   pman.ParthenonFinalize();
 

@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
   pman.app_input->ProblemGenerator = burgers_benchmark::ProblemGenerator;
 
   // call ParthenonInit to initialize MPI and Kokkos, parse the input deck, and set up
-  auto manager_status = pman.ParthenonInit(argc, argv);
+  auto manager_status = pman.ParthenonInitEnv(argc, argv);
 
 #ifdef USE_MEMORY_RECORD
   MemoryRecorder mem_record = MemoryRecorder();
@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
   // make use of MPI and Kokkos
 
   // This needs to be scoped so that the driver object is destructed before Finalize
+  pman.ParthenonInitPackagesAndMesh();
   {
     // Initialize the driver
     burgers_benchmark::BurgersDriver driver(pman.pinput.get(), pman.app_input.get(),
